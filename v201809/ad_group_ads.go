@@ -127,7 +127,8 @@ func (aga *AdGroupAds) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) er
 						return err
 					}
 				default:
-					return fmt.Errorf("unknown AdGroupCriterion -> %#v", start)
+
+					//return fmt.Errorf("unknown Ad -> %#v", start)
 				}
 			case "experimentData":
 				err := dec.DecodeElement(&experimentData, &start)
