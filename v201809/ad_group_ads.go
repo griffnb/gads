@@ -84,7 +84,6 @@ func (aga *AdGroupAds) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) er
 				if err != nil {
 					return err
 				}
-				fmt.Println(typeName)
 				switch typeName {
 				case "TextAd":
 					a := TextAd{AdGroupId: adGroupId}
