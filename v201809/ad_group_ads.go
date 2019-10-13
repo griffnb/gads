@@ -175,7 +175,7 @@ func (aga *AdGroupAds) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) er
 					return err
 				}
 			default:
-				return fmt.Errorf("unknown AdGroupAd field -> %#v", tag)
+				//return fmt.Errorf("unknown AdGroupAd field -> %#v", tag)
 			}
 
 		}
