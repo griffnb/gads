@@ -126,8 +126,12 @@ func (aga *AdGroupAds) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) er
 						return err
 					}
 				default:
-
-					//return fmt.Errorf("unknown Ad -> %#v", start)
+					// If unkonw, try just shoving it into expanded text
+					a := ExpandedTextAd{AdGroupId: adGroupId}
+					err := dec.DecodeElement(&a, &start)
+					if err != nil {
+						return err
+					}
 				}
 			case "experimentData":
 				err := dec.DecodeElement(&experimentData, &start)
@@ -175,7 +179,7 @@ func (aga *AdGroupAds) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) er
 					return err
 				}
 			default:
-				//return fmt.Errorf("unknown AdGroupAd field -> %#v", tag)
+				return fmt.Errorf("unknown AdGroupAd field -> %#v", tag)
 			}
 
 		}
