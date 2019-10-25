@@ -119,12 +119,14 @@ func (aga *AdGroupAds) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) er
 					if err != nil {
 						return err
 					}
+					ad = a
 				case "ProductAd":
 					a := ProductAd{AdGroupId: adGroupId}
 					err := dec.DecodeElement(&a, &start)
 					if err != nil {
 						return err
 					}
+					ad = a
 				default:
 					// If unkonw, try just shoving it into expanded text
 					a := ExpandedTextAd{AdGroupId: adGroupId}
@@ -132,6 +134,7 @@ func (aga *AdGroupAds) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) er
 					if err != nil {
 						return err
 					}
+					ad = a
 				}
 			case "experimentData":
 				err := dec.DecodeElement(&experimentData, &start)
