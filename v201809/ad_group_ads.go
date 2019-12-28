@@ -3,6 +3,8 @@ package v201809
 import (
 	"encoding/xml"
 	"fmt"
+
+	"github.com/griffnb/gocore/log"
 )
 
 type AdGroupAds []interface{}
@@ -113,7 +115,7 @@ func (aga *AdGroupAds) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) er
 						return err
 					}
 					ad = a
-				case "DynamicSearchAd":
+				case "DynamicSearchAd", "ResponsiveSearchAd":
 					a := DynamicSearchAd{AdGroupId: adGroupId}
 					err := dec.DecodeElement(&a, &start)
 					if err != nil {
@@ -128,10 +130,12 @@ func (aga *AdGroupAds) UnmarshalXML(dec *xml.Decoder, start xml.StartElement) er
 					}
 					ad = a
 				default:
+					log.Debug(fmt.Sprintf("Unknown Ad Type %v", typeName))
 					// If unkonw, try just shoving it into expanded text
 					a := ExpandedTextAd{AdGroupId: adGroupId}
 					err := dec.DecodeElement(&a, &start)
 					if err != nil {
+						log.Error(err)
 						return err
 					}
 					ad = a
